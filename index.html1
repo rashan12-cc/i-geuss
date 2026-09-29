@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SYSTEM_FAILURE // DEV_PROFILE_V666.exe</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for Monospace Code Look -->
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -233,7 +231,7 @@
             <!-- Terminal Input Bar -->
             <div class="bg-zinc-950 p-3 border-t border-red-900/40 flex items-center">
                 <span class="text-red-500 font-bold mr-2">guest@portfolio:~$</span>
-                <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false" class="flex-grow bg-transparent text-white outline-none font-mono text-sm caret-red-500">
+                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" class="flex-grow bg-transparent text-white outline-none font-mono text-sm caret-red-500">
                 <button onclick="handleUserInput()" class="bg-red-950 hover:bg-red-900 text-red-300 text-xs px-3 py-1.5 rounded border border-red-800 transition-colors ml-2 font-mono">EXEC</button>
             </div>
         </div>
@@ -244,183 +242,206 @@
     </footer>
 
     <script>
-        // Live Clock Generator
-        setInterval(() => {
-            const now = new Date();
-            document.getElementById('live-clock').innerText = now.toTimeString().split(' ')[0];
-        }, 1000);
-
-        // Matrix Rain Background Effect
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>/?';
-        const alphabet = katakana + latin;
-
-        const fontSize = 16;
-        let columns = canvas.width / fontSize;
-        let rainDrops = [];
-
-        function initMatrix() {
-            columns = canvas.width / fontSize;
-            rainDrops = [];
-            for (let x = 0; x < columns; x++) {
-                rainDrops[x] = 1;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Live Clock Generator safely guarded
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) {
+                setInterval(() => {
+                    const now = new Date();
+                    clockEl.innerText = now.toTimeString().split(' ')[0];
+                }, 1000);
             }
-        }
-        initMatrix();
 
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Matrix Rain Background Effect safely guarded
+            const canvas = document.getElementById('matrix-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
 
-            ctx.fillStyle = '#ff003c'; // Blood red matrix rain
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < rainDrops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    rainDrops[i] = 0;
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
                 }
-                rainDrops[i]++;
-            }
-        }
-        let matrixInterval = setInterval(drawMatrix, 30);
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
 
-        // Terminal Interactive Logic
-        const terminalOutput = document.getElementById('terminal-output');
-        const terminalInput = document.getElementById('terminal-input');
+                const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+                const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>/?';
+                const alphabet = katakana + latin;
 
-        const responses = {
-            'help': `
-                <div class="space-y-1 text-zinc-300">
-                    <p class="text-red-500 font-bold">// AVAILABLE COMMANDS:</p>
-                    <p><span class="text-white font-bold">about</span>      - Reveals the tragic truth behind this developer.</p>
-                    <p><span class="text-white font-bold">skills</span>     - Displays professional and totally legitimate skills.</p>
-                    <p><span class="text-white font-bold">projects</span>   - Showcases fake apps guaranteed to crash your browser.</p>
-                    <p><span class="text-white font-bold">hire</span>       - Tries to calculate how much you cannot afford me.</p>
-                    <p><span class="text-white font-bold">matrix</span>     - Toggles the red matrix rain speed/intensity.</p>
-                    <p><span class="text-white font-bold">clear</span>      - Clears the terminal screen.</p>
-                    <p><span class="text-white font-bold">sudo rm -rf /</span> - Triggers immediate panic protocol.</p>
-                </div>
-            `,
-            'about': `
-                <div class="space-y-2 text-zinc-300">
-                    <p class="text-red-500 font-bold">> WHOAMI: LALU DEV</p>
-                    <p>I am a professional StackOverflow copy-paste architect and a grandmaster at centering divs using absolute luck and prayer.</p>
-                    <p>My code works on my machine. If it breaks on yours, that's clearly a hardware issue on your end. ¯\\_(ツ)_/¯ </p>
-                </div>
-            `,
-            'skills': `
-                <div class="space-y-2 text-zinc-300">
-                    <p class="text-red-500 font-bold">> TECH_STACK & EXPERTISE:</p>
-                    <ul class="list-disc list-inside space-y-1">
-                        <li><span class="text-white">HTML5</span> - My absolute favorite programming language (just kidding, please don't yell at me).</li>
-                        <li><span class="text-white">CSS / Tailwind</span> - Centering things by randomly changing flex properties until it looks okay.</li>
-                        <li><span class="text-white">JavaScript</span> - Fixing "undefined is not a function" by throwing more console.logs at it.</li>
-                        <li><span class="text-white">Debugging</span> - Staring blankly at the screen until the computer gets intimidated and fixes itself.</li>
-                    </ul>
-                </div>
-            `,
-            'projects': `
-                <div class="space-y-3 text-zinc-300">
-                    <p class="text-red-500 font-bold">> FEATURED_PROJECTS:</p>
-                    <div class="border-l-2 border-red-600 pl-3 space-y-1">
-                        <p class="text-white font-bold">1. Self-Driving Toaster (v1.0)</p>
-                        <p class="text-xs text-zinc-400">A toaster equipped with AI that burns your toast with machine learning precision.</p>
-                    </div>
-                    <div class="border-l-2 border-red-600 pl-3 space-y-1">
-                        <p class="text-white font-bold">2. App That Deletes System32 (Trust Me)</p>
-                        <p class="text-xs text-zinc-400">100% safe app. Free RAM download included. Definitely not a virus.</p>
-                    </div>
-                </div>
-            `,
-            'hire': `
-                <div class="space-y-2 text-red-400">
-                    <p class="font-bold">> WALLET_CHECK_INITIALIZED...</p>
-                    <p class="text-zinc-300">Error 402: You definitely cannot afford my hourly rate of 1 Million cups of espresso and an unlimited supply of pizza.</p>
-                    <p class="text-xs text-zinc-400">Send an email anyway if you dare: <span class="text-white underline">troll@dev-console.local</span></p>
-                </div>
-            `,
-            'sudo rm -rf /': `
-                <div class="bg-red-950/80 border border-red-600 p-4 rounded text-white space-y-2 animate-pulse">
-                    <p class="font-bold text-red-400">KERNEL PANIC: SYSTEM FILES WIPED!</p>
-                    <p class="text-xs">Just kidding! Did you really think I'd let a guest run root commands? Nice try, hacker wannabe. 😉</p>
-                </div>
-            `,
-            'matrix': `
-                <div class="text-red-400">
-                    <p>> Matrix rain frequency scrambled! Welcome deeper into the rabbit hole.</p>
-                </div>
-            `,
-            'clear': 'CLEAR'
-        };
+                const fontSize = 16;
+                let columns = Math.floor(canvas.width / fontSize);
+                let rainDrops = [];
 
-        function printToTerminal(command, outputHtml) {
-            const cmdDiv = document.createElement('div');
-            cmdDiv.innerHTML = `<span class="text-zinc-500">guest@portfolio:~$</span> <span class="text-white">${escapeHtml(command)}</span>`;
-            terminalOutput.appendChild(cmdDiv);
+                function initMatrix() {
+                    columns = Math.floor(canvas.width / fontSize);
+                    rainDrops = [];
+                    for (let x = 0; x < columns; x++) {
+                        rainDrops[x] = 1;
+                    }
+                }
+                initMatrix();
 
-            if (outputHtml === 'CLEAR') {
-                terminalOutput.innerHTML = '';
-            } else if (outputHtml) {
-                const outDiv = document.createElement('div');
-                outDiv.className = 'my-2 pl-2';
-                outDiv.innerHTML = outputHtml;
-                terminalOutput.appendChild(outDiv);
-            }
+                function drawMatrix() {
+                    ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            terminalOutput.scrollTop = terminalOutput.scrollHeight;
-        }
+                    ctx.fillStyle = '#ff003c';
+                    ctx.font = fontSize + 'px monospace';
 
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
+                    for (let i = 0; i < rainDrops.length; i++) {
+                        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 
-        function handleUserInput() {
-            const val = terminalInput.value.trim().toLowerCase();
-            if (!val) return;
+                        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                            rainDrops[i] = 0;
+                        }
+                        rainDrops[i]++;
+                    }
+                }
+                let matrixInterval = setInterval(drawMatrix, 30);
 
-            if (val === 'clear') {
-                terminalOutput.innerHTML = '';
-                terminalInput.value = '';
-                return;
-            }
-
-            if (val === 'matrix') {
-                // Flash matrix color speed
-                clearInterval(matrixInterval);
-                matrixInterval = setInterval(drawMatrix, 10);
-                setTimeout(() => {
+                // Expose matrix speed trigger safely
+                window.triggerMatrixSpeedBoost = function() {
                     clearInterval(matrixInterval);
-                    matrixInterval = setInterval(drawMatrix, 30);
-                }, 3000);
+                    matrixInterval = setInterval(drawMatrix, 10);
+                    setTimeout(() => {
+                        clearInterval(matrixInterval);
+                        matrixInterval = setInterval(drawMatrix, 30);
+                    }, 3000);
+                };
             }
 
-            const response = responses[val] || `<span class="text-red-500">Command not recognized: "${escapeHtml(val)}". Type <span class="text-white underline">help</span> for valid commands. Stop making things up!</span>`;
-            
-            printToTerminal(val, response);
-            terminalInput.value = '';
-        }
+            // Terminal Interactive Logic safely guarded
+            const terminalOutput = document.getElementById('terminal-output');
+            const terminalInput = document.getElementById('terminal-input');
 
-        function executeQuickCommand(cmd) {
-            terminalInput.value = cmd;
-            handleUserInput();
-        }
+            const responses = {
+                'help': `
+                    <div class="space-y-1 text-zinc-300">
+                        <p class="text-red-500 font-bold">// AVAILABLE COMMANDS:</p>
+                        <p><span class="text-white font-bold">about</span>      - Reveals the tragic truth behind this developer.</p>
+                        <p><span class="text-white font-bold">skills</span>     - Displays professional and totally legitimate skills.</p>
+                        <p><span class="text-white font-bold">projects</span>   - Showcases fake apps guaranteed to crash your browser.</p>
+                        <p><span class="text-white font-bold">hire</span>       - Tries to calculate how much you cannot afford me.</p>
+                        <p><span class="text-white font-bold">matrix</span>     - Toggles the red matrix rain speed/intensity.</p>
+                        <p><span class="text-white font-bold">clear</span>      - Clears the terminal screen.</p>
+                        <p><span class="text-white font-bold">sudo rm -rf /</span> - Triggers immediate panic protocol.</p>
+                    </div>
+                `,
+                'about': `
+                    <div class="space-y-2 text-zinc-300">
+                        <p class="text-red-500 font-bold">> WHOAMI: LALU DEV</p>
+                        <p>I am a professional StackOverflow copy-paste architect and a grandmaster at centering divs using absolute luck and prayer.</p>
+                        <p>My code works on my machine. If it breaks on yours, that's clearly a hardware issue on your end. ¯\\_(ツ)_/¯ </p>
+                    </div>
+                `,
+                'skills': `
+                    <div class="space-y-2 text-zinc-300">
+                        <p class="text-red-500 font-bold">> TECH_STACK & EXPERTISE:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><span class="text-white">HTML5</span> - My absolute favorite programming language (just kidding, please don't yell at me).</li>
+                            <li><span class="text-white">CSS / Tailwind</span> - Centering things by randomly changing flex properties until it looks okay.</li>
+                            <li><span class="text-white">JavaScript</span> - Fixing "undefined is not a function" by throwing more console.logs at it.</li>
+                            <li><span class="text-white">Debugging</span> - Staring blankly at the screen until the computer gets intimidated and fixes itself.</li>
+                        </ul>
+                    </div>
+                `,
+                'projects': `
+                    <div class="space-y-3 text-zinc-300">
+                        <p class="text-red-500 font-bold">> FEATURED_PROJECTS:</p>
+                        <div class="border-l-2 border-red-600 pl-3 space-y-1">
+                            <p class="text-white font-bold">1. Self-Driving Toaster (v1.0)</p>
+                            <p class="text-xs text-zinc-400">A toaster equipped with AI that burns your toast with machine learning precision.</p>
+                        </div>
+                        <div class="border-l-2 border-red-600 pl-3 space-y-1">
+                            <p class="text-white font-bold">2. App That Deletes System32 (Trust Me)</p>
+                            <p class="text-xs text-zinc-400">100% safe app. Free RAM download included. Definitely not a virus.</p>
+                        </div>
+                    </div>
+                `,
+                'hire': `
+                    <div class="space-y-2 text-red-400">
+                        <p class="font-bold">> WALLET_CHECK_INITIALIZED...</p>
+                        <p class="text-zinc-300">Error 402: You definitely cannot afford my hourly rate of 1 Million cups of espresso and an unlimited supply of pizza.</p>
+                        <p class="text-xs text-zinc-400">Send an email anyway if you dare: <span class="text-white underline">troll@dev-console.local</span></p>
+                    </div>
+                `,
+                'sudo rm -rf /': `
+                    <div class="bg-red-950/80 border border-red-600 p-4 rounded text-white space-y-2 animate-pulse">
+                        <p class="font-bold text-red-400">KERNEL PANIC: SYSTEM FILES WIPED!</p>
+                        <p class="text-xs">Just kidding! Did you really think I'd let a guest run root commands? Nice try, hacker wannabe. 😉</p>
+                    </div>
+                `,
+                'matrix': `
+                    <div class="text-red-400">
+                        <p>> Matrix rain frequency scrambled! Welcome deeper into the rabbit hole.</p>
+                    </div>
+                `,
+                'clear': 'CLEAR'
+            };
 
-        terminalInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                handleUserInput();
+            window.escapeHtml = function(text) {
+                return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            };
+
+            window.printToTerminal = function(command, outputHtml) {
+                if (!terminalOutput) return;
+                const cmdDiv = document.createElement('div');
+                cmdDiv.innerHTML = `<span class="text-zinc-500">guest@portfolio:~$</span> <span class="text-white">${window.escapeHtml(command)}</span>`;
+                terminalOutput.appendChild(cmdDiv);
+
+                if (outputHtml === 'CLEAR') {
+                    terminalOutput.innerHTML = '';
+                } else if (outputHtml) {
+                    const outDiv = document.createElement('div');
+                    outDiv.className = 'my-2 pl-2';
+                    outDiv.innerHTML = outputHtml;
+                    terminalOutput.appendChild(outDiv);
+                }
+
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            };
+
+            window.clearTerminal = function() {
+                if (terminalOutput) {
+                    terminalOutput.innerHTML = '';
+                }
+            };
+
+            window.handleUserInput = function() {
+                if (!terminalInput) return;
+                const val = terminalInput.value.trim().toLowerCase();
+                if (!val) return;
+
+                if (val === 'clear') {
+                    window.clearTerminal();
+                    terminalInput.value = '';
+                    return;
+                }
+
+                if (val === 'matrix' && typeof window.triggerMatrixSpeedBoost === 'function') {
+                    window.triggerMatrixSpeedBoost();
+                }
+
+                const response = responses[val] || `<span class="text-red-500">Command not recognized: "${window.escapeHtml(val)}". Type <span class="text-white underline">help</span> for valid commands. Stop making things up!</span>`;
+                
+                window.printToTerminal(val, response);
+                terminalInput.value = '';
+            };
+
+            window.executeQuickCommand = function(cmd) {
+                if (terminalInput) {
+                    terminalInput.value = cmd;
+                    window.handleUserInput();
+                }
+            };
+
+            if (terminalInput) {
+                terminalInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        window.handleUserInput();
+                    }
+                });
             }
         });
     </script>
